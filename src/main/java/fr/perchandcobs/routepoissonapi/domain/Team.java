@@ -16,6 +16,8 @@ public class Team {
 
     private float battery;
 
+    private String letter = "A";
+
     private List<Position> positions;
 
     public String getName() {
@@ -60,6 +62,15 @@ public class Team {
         if (o == null || getClass() != o.getClass()) return false;
         Team team = (Team) o;
         return Float.compare(team.battery, battery) == 0 && Objects.equals(name, team.name);
+    }
+
+    public String getLetter() {
+        return letter;
+    }
+
+    public Team setLetter(String letter) {
+        this.letter = letter;
+        return this;
     }
 
     @Override
