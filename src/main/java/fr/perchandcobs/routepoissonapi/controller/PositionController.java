@@ -37,7 +37,7 @@ public class PositionController {
             @RequestParam float precision
             ) {
 
-        float batteryFloat = Float.parseFloat(battery.substring(0, 4));
+        float batteryFloat = Float.parseFloat(battery.split("\\.")[0]);
 
         Team savedTeam = teamService.findByName(team)
                 .map(p -> p.setBattery(batteryFloat))
