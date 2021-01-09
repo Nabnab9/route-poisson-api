@@ -25,13 +25,13 @@ public class PropertiesController {
         this.propertiesService = propertiesService;
     }
 
-    @GetMapping(path = "/properties")
-    public ResponseEntity<Resource> download(@RequestParam String teamName) throws IOException {
+    @GetMapping(path = "/properties/{fileName}")
+    public ResponseEntity<Resource> download(@PathVariable String fileName) throws IOException {
 
-        ByteArrayResource propertiesResource = propertiesService.getProperties(teamName);
+        ByteArrayResource propertiesResource = propertiesService.getProperties(fileName);
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + teamName + ".properties")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(propertiesResource);
     }
