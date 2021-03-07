@@ -20,6 +20,8 @@ public class Team {
 
     private List<Position> positions;
 
+    private List<Member> members;
+
     public String getName() {
         return name;
     }
@@ -84,5 +86,14 @@ public class Team {
                 "name='" + name + '\'' +
                 ", battery=" + battery +
                 '}';
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public Team setMembers(List<Member> members) {
+        this.members = members;
+        return this;
     }
 }

@@ -34,4 +34,8 @@ public class TeamService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteTeam(String teamId) {
+        positionService.deleteByTeamId(teamId);
+        teamRepository.deleteById(teamId);
+    }
 }

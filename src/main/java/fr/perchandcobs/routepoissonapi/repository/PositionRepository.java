@@ -11,4 +11,5 @@ public interface PositionRepository extends MongoRepository<Position, String> {
 
     List<Position> findAllByTeam_Name(String teamName);
 
+    void deleteByTeamId(String teamId);
 }

@@ -1,5 +1,8 @@
 package fr.perchandcobs.routepoissonapi.dto;
 
+import fr.perchandcobs.routepoissonapi.domain.Member;
+
+import java.util.List;
 import java.util.Objects;
 
 public class RTeam {
@@ -9,6 +12,8 @@ public class RTeam {
     private float battery;
 
     private String letter = "A";
+
+    private List<Member> members;
 
     public String getName() {
         return name;
@@ -56,5 +61,14 @@ public class RTeam {
                 "name='" + name + '\'' +
                 ", battery=" + battery +
                 '}';
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public RTeam setMembers(List<Member> members) {
+        this.members = members;
+        return this;
     }
 }

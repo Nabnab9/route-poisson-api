@@ -26,4 +26,8 @@ public class PositionService {
     public List<Position> findAll() {
         return positionRepository.findAll();
     }
+
+    public void deleteByTeamId(String teamId) {
+        positionRepository.deleteByTeamId(teamId);
+    }
 }

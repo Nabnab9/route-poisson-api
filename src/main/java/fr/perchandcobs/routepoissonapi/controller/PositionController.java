@@ -4,7 +4,10 @@ import fr.perchandcobs.routepoissonapi.domain.Position;
 import fr.perchandcobs.routepoissonapi.domain.Team;
 import fr.perchandcobs.routepoissonapi.service.PositionService;
 import fr.perchandcobs.routepoissonapi.service.TeamService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +18,8 @@ import java.util.List;
 @CrossOrigin
 public class PositionController {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private final PositionService positionService;
     private final TeamService teamService;
 
@@ -24,7 +29,7 @@ public class PositionController {
     }
 
     @PostMapping("/positions")
-    public Position addPosition(
+    public ResponseEntity<Position> addPosition(
             @RequestParam float latitude,
             @RequestParam float longitude,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
@@ -35,7 +40,7 @@ public class PositionController {
             @RequestParam String androidId,
             @RequestParam float altitude,
             @RequestParam float precision
-            ) {
+    ) {
 
         float batteryFloat = Float.parseFloat(battery.split("\\.")[0]);
 
@@ -43,25 +48,25 @@ public class PositionController {
                 .map(p -> p.setBattery(batteryFloat))
                 .map(teamService::addTeam)
                 .orElseGet(() -> teamService.addTeam(new Team().setBattery(batteryFloat).setName(team)));
-
-        return positionService.addPosition(
+        logger.info("Created position at [{} {}] for team [{}]", latitude, longitude, savedTeam.getName());
+        return ResponseEntity.ok(positionService.addPosition(
                 new Position()
-                .setAltitude(altitude)
-                .setAndroidId(androidId)
-                .setBattery(batteryFloat)
-                .setDateTime(dateTime)
-                .setLatitude(latitude)
-                .setLongitude(longitude)
-                .setSpeed(speed)
-                .setTeam(savedTeam)
-                .setSerial(serial)
-                .setPrecision(precision)
-        );
+                        .setAltitude(altitude)
+                        .setAndroidId(androidId)
+                        .setBattery(batteryFloat)
+                        .setDateTime(dateTime)
+                        .setLatitude(latitude)
+                        .setLongitude(longitude)
+                        .setSpeed(speed)
+                        .setTeam(savedTeam)
+                        .setSerial(serial)
+                        .setPrecision(precision)
+        ));
     }
 
     @GetMapping("/positions")
-    public List<Position> findAllPositions( ) {
-        return positionService.findAll();
+    public ResponseEntity<List<Position>> findAllPositions() {
+        return ResponseEntity.ok(positionService.findAll());
     }
 
 }
