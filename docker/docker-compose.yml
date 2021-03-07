@@ -9,3 +9,10 @@ services:
     container_name: mongodb
     ports:
       - "27017:27017"
+  app:
+    image: route-poisson-api:0.0.1-SNAPSHOT
+    ports:
+      - 8080:8080
+      - 27017:27017
+    expose:
+      - "27017"

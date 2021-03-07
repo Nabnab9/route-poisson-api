@@ -2,6 +2,7 @@ package fr.perchandcobs.routepoissonapi.controller;
 
 import fr.perchandcobs.routepoissonapi.domain.Position;
 import fr.perchandcobs.routepoissonapi.domain.Team;
+import fr.perchandcobs.routepoissonapi.dto.RTeam;
 import fr.perchandcobs.routepoissonapi.exception.NotFoundException;
 import fr.perchandcobs.routepoissonapi.service.TeamService;
 import org.slf4j.Logger;
@@ -35,10 +36,10 @@ public class TeamController {
     }
 
     @PostMapping("/teams")
-    public Team addTeam() {
-        return teamService.addTeam(new Team().setName("C'est mieux ?").setBattery(54)).setPositions(Collections.singletonList(new Position()));
+    public Team addTeam(@RequestBody RTeam team) {
+        Team t = new Team().setName(team.getName());
+        return teamService.addTeam(t);
     }
-
 
 
 
