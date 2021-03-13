@@ -5,6 +5,7 @@ import fr.perchandcobs.routepoissonapi.repository.PositionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PositionService {
@@ -29,5 +30,9 @@ public class PositionService {
 
     public void deleteByTeamId(String teamId) {
         positionRepository.deleteByTeamId(teamId);
+    }
+
+    public Optional<Position> findLastPositionInSession(String sessionId) {
+        return positionRepository.findFirstBySessionIdOrderByDateTimeDesc(sessionId);
     }
 }

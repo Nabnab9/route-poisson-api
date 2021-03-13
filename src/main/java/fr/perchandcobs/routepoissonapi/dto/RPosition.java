@@ -1,6 +1,6 @@
 package fr.perchandcobs.routepoissonapi.dto;
 
-import fr.perchandcobs.routepoissonapi.domain.Team;
+import fr.perchandcobs.routepoissonapi.domain.Session;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -20,6 +20,7 @@ public class RPosition {
     private String androidId;
     private float altitude;
     private float precision;
+    private Session session;
 
 
 
@@ -149,5 +150,14 @@ public class RPosition {
                 ", altitude=" + altitude +
                 ", precision=" + precision +
                 '}';
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public RPosition setSession(Session session) {
+        this.session = session;
+        return this;
     }
 }

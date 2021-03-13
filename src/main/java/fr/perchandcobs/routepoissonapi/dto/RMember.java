@@ -9,8 +9,17 @@ public class RMember {
         return phoneNumber;
     }
 
-    public RMember withPhoneNumber(String phoneNumber) {
+    public RMember setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public RMember setName(String name) {
+        this.name = name;
         return this;
     }
 }

@@ -26,12 +26,12 @@ public class TeamController {
     }
 
     @GetMapping("/teams")
-    public ResponseEntity<List<Team>> findAllTeamsWithPositions( ) {
-       return ResponseEntity.ok(teamService.findAllTeamsWithPositions());
+    public ResponseEntity<List<Team>> findAllTeamsWithPositions() {
+        return ResponseEntity.ok(teamService.findAllTeamsWithPositions());
     }
 
     @GetMapping("/teams/{name}")
-    public ResponseEntity<Team> findTeamByName(@PathVariable String name){
+    public ResponseEntity<Team> findTeamByName(@PathVariable String name) {
         return teamService.findByName(name)
                 .map(ResponseEntity::ok)
                 .orElseThrow(NotFoundException::new);
@@ -52,7 +52,6 @@ public class TeamController {
         teamService.deleteTeam(teamId);
         return ResponseEntity.noContent().build();
     }
-
 
 
 }

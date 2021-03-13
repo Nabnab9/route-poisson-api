@@ -1,8 +1,10 @@
 package fr.perchandcobs.routepoissonapi.controller;
 
 import fr.perchandcobs.routepoissonapi.domain.Position;
+import fr.perchandcobs.routepoissonapi.domain.Session;
 import fr.perchandcobs.routepoissonapi.domain.Team;
 import fr.perchandcobs.routepoissonapi.service.PositionService;
+import fr.perchandcobs.routepoissonapi.service.SessionService;
 import fr.perchandcobs.routepoissonapi.service.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +24,12 @@ public class PositionController {
 
     private final PositionService positionService;
     private final TeamService teamService;
+    private final SessionService sessionService;
 
-    public PositionController(PositionService positionService, TeamService teamService) {
+    public PositionController(PositionService positionService, TeamService teamService, SessionService sessionService) {
         this.positionService = positionService;
         this.teamService = teamService;
+        this.sessionService = sessionService;
     }
 
     @PostMapping("/positions")
@@ -48,7 +52,12 @@ public class PositionController {
                 .map(p -> p.setBattery(batteryFloat))
                 .map(teamService::addTeam)
                 .orElseGet(() -> teamService.addTeam(new Team().setBattery(batteryFloat).setName(team)));
-        logger.info("Created position at [{} {}] for team [{}]", latitude, longitude, savedTeam.getName());
+
+        Session session = sessionService.findAllByEndDateIsNull().stream()
+                .findFirst()
+                .orElseGet(sessionService::createSession);
+
+        logger.info("Created position at [{} {}] for team [{}] at dateTime [{}]", latitude, longitude, savedTeam.getName(), dateTime);
         return ResponseEntity.ok(positionService.addPosition(
                 new Position()
                         .setAltitude(altitude)
@@ -61,6 +70,7 @@ public class PositionController {
                         .setTeam(savedTeam)
                         .setSerial(serial)
                         .setPrecision(precision)
+                        .setSession(session)
         ));
     }
 

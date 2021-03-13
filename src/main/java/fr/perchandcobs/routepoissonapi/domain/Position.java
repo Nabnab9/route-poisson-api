@@ -22,6 +22,7 @@ public class Position {
     private String androidId;
     private float altitude;
     private float precision;
+    private Session session;
 
 
 
@@ -151,5 +152,14 @@ public class Position {
                 ", altitude=" + altitude +
                 ", precision=" + precision +
                 '}';
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public Position setSession(Session session) {
+        this.session = session;
+        return this;
     }
 }
