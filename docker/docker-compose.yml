@@ -10,9 +10,9 @@ services:
     ports:
       - "27017:27017"
   app:
-    image: route-poisson-api:0.0.1-SNAPSHOT
+    image: route-poisson-api:latest
     ports:
-      - 8080:8080
-      - 27017:27017
-    expose:
-      - "27017"
+      - 8081:8080
+#      - 27017:27017
+#    expose:
+#      - "27017"
